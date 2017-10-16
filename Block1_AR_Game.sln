@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2017
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Block1_AR_Game", "Block1_AR_Game.csproj", "{DFFDC4A0-1237-B94B-7739-4B7D676C53C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Block1_AR_Game.Editor", "Block1_AR_Game.Editor.csproj", "{963FE9E8-F589-109F-6B8E-4B264AF31683}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DFFDC4A0-1237-B94B-7739-4B7D676C53C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFFDC4A0-1237-B94B-7739-4B7D676C53C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFFDC4A0-1237-B94B-7739-4B7D676C53C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFFDC4A0-1237-B94B-7739-4B7D676C53C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{963FE9E8-F589-109F-6B8E-4B264AF31683}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{963FE9E8-F589-109F-6B8E-4B264AF31683}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{963FE9E8-F589-109F-6B8E-4B264AF31683}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{963FE9E8-F589-109F-6B8E-4B264AF31683}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
