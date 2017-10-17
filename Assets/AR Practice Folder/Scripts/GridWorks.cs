@@ -3,46 +3,75 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GridWorks : MonoBehaviour {
-
-    //AR starting plane size where the grid will be placed upon
-    [SerializeField]
-    float planeWidth = 1;
-    [SerializeField]
-    float planeLength = 1;
-    [SerializeField]
-    float planeHeight = 1;
-
-    //Amount of cubes in the grid, length x width
-    [SerializeField]
-    int lengthGrid = 1;
-    [SerializeField]
-    int widthGrid = 1;
+    
+    int lengthGrid = 18;
+    int widthGrid = 18;
     [SerializeField]
     GameObject gridPrefab;
     [SerializeField]
     GameObject parentObject;
-
-    public List<List<GameObject>> gridBlocks = new List<List<GameObject>>();
+    [SerializeField]
+    GameObject buildable;
+    GameObject currentInstance;
+    
+    public List<List<int>> buildablePlatforms = new List<List<int>>();
 
     //Initialization
     void Start () {
-        gameObject.transform.localScale = new Vector3(planeWidth, planeHeight, planeLength);
-        float zeroPointX = (-planeWidth * 0.5f);
-        float zeroPointY = (planeHeight * 0.5f)+1.01f;
-        float zeroPointZ = (-planeLength * 0.5f);
-        float widthGridBlock = planeWidth/(widthGrid + 1);//small margin
-        float lengthGridBlock = planeLength/(lengthGrid + 1);//small margin
-        for (int x = 0; x < widthGrid; x++)
+
+        float zeroPointX = (-widthGrid * 0.5f);
+        float zeroPointZ = (-lengthGrid * 0.5f);
+
+        if (buildablePlatforms.Count == 0)//Checks if the map has been loaded before
         {
-            List<GameObject> xCoordinate = new List<GameObject>();
-            for(int z = 0; z < lengthGrid; z++)
+            for (int x = 0; x < widthGrid; x++)
             {
-                GameObject currentInstance = Instantiate(gridPrefab, parentObject.transform);
-                xCoordinate.Add(currentInstance);
-                currentInstance.gameObject.transform.localScale = new Vector3(widthGridBlock, planeHeight, lengthGridBlock);
-                currentInstance.gameObject.transform.SetPositionAndRotation(new Vector3((zeroPointX + ((x+ 1) * widthGridBlock)),zeroPointY,(zeroPointZ + ((z + 1) * lengthGridBlock))),Quaternion.identity);
+
+                List<int> xCoordinate = new List<int>();
+
+                for (int z = 0; z < lengthGrid; z++)
+                {
+
+                    if (z > 6 && z < 13 && x > 6 && x < 13)
+                    {
+                        currentInstance = Instantiate(buildable, parentObject.transform);
+                        xCoordinate.Add(1);
+                    }
+                    else
+                    {
+                        currentInstance = Instantiate(gridPrefab, parentObject.transform);
+                        xCoordinate.Add(0);
+                    }
+
+                    currentInstance.gameObject.transform.SetPositionAndRotation(new Vector3((zeroPointX + (x + 1)), 1, (zeroPointZ + (z + 1))), Quaternion.identity);
+
+                }
+
+                buildablePlatforms.Add(xCoordinate);
             }
-            gridBlocks.Add(xCoordinate);
+        }
+        else
+        {
+            int currentX = 0;
+
+            foreach(List<int> x in buildablePlatforms)
+            {
+                currentX += 1;
+
+                foreach(int z in x)
+                {
+                    if(z == 0)//check for platform, mud or building. Each building has another number
+                    {
+                        currentInstance = Instantiate(gridPrefab, parentObject.transform);
+                    }
+                    else if(z == 1)
+                    {
+                        currentInstance = Instantiate(buildable, parentObject.transform);
+                    }
+
+                    currentInstance.gameObject.transform.SetPositionAndRotation(new Vector3((zeroPointX + (currentX + 1)), 1, (zeroPointZ + (z + 1))), Quaternion.identity);
+                }
+            }
         }
     }
 }
