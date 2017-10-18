@@ -43,7 +43,7 @@ public class GridWorks : MonoBehaviour {
                         xCoordinate.Add(0);
                     }
 
-                    currentInstance.gameObject.transform.SetPositionAndRotation(new Vector3((zeroPointX + (x + 1)), 1, (zeroPointZ + (z + 1))), Quaternion.identity);
+                    currentInstance.gameObject.transform.SetPositionAndRotation(new Vector3((zeroPointX + (x + 1)), 1.01f, (zeroPointZ + (z + 1))), Quaternion.identity);
 
                 }
 
@@ -69,7 +69,7 @@ public class GridWorks : MonoBehaviour {
                         currentInstance = Instantiate(buildable, parentObject.transform);
                     }
 
-                    currentInstance.gameObject.transform.SetPositionAndRotation(new Vector3((zeroPointX + (currentX + 1)), 1, (zeroPointZ + (z + 1))), Quaternion.identity);
+                    currentInstance.gameObject.transform.SetPositionAndRotation(new Vector3((zeroPointX + (currentX + 1)), 1.01f, (zeroPointZ + (z + 1))), Quaternion.identity);
                 }
             }
         }
