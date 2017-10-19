@@ -40,6 +40,8 @@ public class GridWorks : MonoBehaviour {
                     else
                     {
                         currentInstance = Instantiate(gridPrefab, parentObject.transform);
+                        currentInstance.GetComponent<GridPieceClick>().thisPosition.Add(x);
+                        currentInstance.GetComponent<GridPieceClick>().thisPosition.Add(z);
                         xCoordinate.Add(0);
                     }
 
