@@ -106,3 +106,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   platform: {fileID: 100000, guid: df307d168793cd24c861cdd891252ee9, type: 3}
+  crematory: {fileID: 100000, guid: e54dd276cc6c7ef47a73bca184bc08df, type: 3}
+  placedBuildings: []
+  thisPosition: 

@@ -8,21 +8,29 @@ public class GridWorks : MonoBehaviour {
     int widthGrid = 18;
     [SerializeField]
     GameObject gridPrefab;
-    [SerializeField]
     GameObject parentObject;
     [SerializeField]
     GameObject buildable;
     GameObject currentInstance;
-    
+    [SerializeField]
+    GameObject crematory;
+    GameObject martiniTower;
+
     public List<List<int>> buildablePlatforms = new List<List<int>>();
 
-    //Initialization
+    private void Update()
+    {
+        martiniTower.transform.Rotate(0,30 * Time.deltaTime, 0 , Space.Self);
+    }
+
     void Start () {
 
-        float zeroPointX = (-widthGrid * 0.5f);
-        float zeroPointZ = (-lengthGrid * 0.5f);
+        martiniTower = GameObject.Find("Plane_001");
+        parentObject = GameObject.Find("ImageTarget");
+        float zeroPointX = (-widthGrid * 0.5f + 0.5f);
+        float zeroPointZ = (-lengthGrid * 0.5f + 0.5f);
 
-        if (buildablePlatforms.Count == 0)//Checks if the map has been loaded before
+        if (buildablePlatforms.Count == 0)//Checks if the map has been created, if not, creates a new map
         {
             for (int x = 0; x < widthGrid; x++)
             {
@@ -32,10 +40,25 @@ public class GridWorks : MonoBehaviour {
                 for (int z = 0; z < lengthGrid; z++)
                 {
 
-                    if (z > 6 && z < 13 && x > 6 && x < 13)
+                    if (z > 5 && z < 12 && x > 5 && x < 12)
                     {
                         currentInstance = Instantiate(buildable, parentObject.transform);
-                        xCoordinate.Add(1);
+                        currentInstance.AddComponent<GridPieceClick>();
+                        currentInstance.GetComponent<GridPieceClick>().thisPosition.Add(x);
+                        currentInstance.GetComponent<GridPieceClick>().thisPosition.Add(z);
+                        currentInstance.GetComponent<GridPieceClick>().crematory = this.crematory;
+                        currentInstance.GetComponent<GridPieceClick>().platform = this.buildable;
+                        currentInstance.AddComponent<BoxCollider>();
+                        currentInstance.GetComponent<BoxCollider>().enabled = true;
+                        if ((z == 9 || z == 10 ) && (x == 9 || x == 10))
+                        {
+                            xCoordinate.Add(2);
+                        }
+                        else {
+                            xCoordinate.Add(1);
+                        }
+                        currentInstance.gameObject.transform.SetPositionAndRotation(new Vector3((zeroPointX + x), 1.01f, (zeroPointZ + z)), Quaternion.identity);
+
                     }
                     else
                     {
@@ -43,9 +66,10 @@ public class GridWorks : MonoBehaviour {
                         currentInstance.GetComponent<GridPieceClick>().thisPosition.Add(x);
                         currentInstance.GetComponent<GridPieceClick>().thisPosition.Add(z);
                         xCoordinate.Add(0);
+                        currentInstance.gameObject.transform.SetPositionAndRotation(new Vector3((zeroPointX + x), 1, (zeroPointZ + z)), Quaternion.identity);
+
                     }
 
-                    currentInstance.gameObject.transform.SetPositionAndRotation(new Vector3((zeroPointX + (x + 1)), 1.01f, (zeroPointZ + (z + 1))), Quaternion.identity);
 
                 }
 
@@ -69,8 +93,17 @@ public class GridWorks : MonoBehaviour {
                     else if(z == 1)
                     {
                         currentInstance = Instantiate(buildable, parentObject.transform);
+                        currentInstance.AddComponent<GridPieceClick>();
+                        currentInstance.GetComponent<GridPieceClick>().thisPosition.Add(currentX);
+                        currentInstance.GetComponent<GridPieceClick>().thisPosition.Add(z);
+                        currentInstance.GetComponent<GridPieceClick>().crematory = this.crematory;
+                        currentInstance.AddComponent<BoxCollider>();
+                        currentInstance.GetComponent<BoxCollider>().enabled = true;
                     }
-
+                    else
+                    {
+                        //open inspector
+                    }
                     currentInstance.gameObject.transform.SetPositionAndRotation(new Vector3((zeroPointX + (currentX + 1)), 1.01f, (zeroPointZ + (z + 1))), Quaternion.identity);
                 }
             }

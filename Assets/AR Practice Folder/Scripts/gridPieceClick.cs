@@ -6,29 +6,41 @@ public class GridPieceClick : MonoBehaviour {
     
     GameObject brickSpawner;
 
-    [SerializeField]
-    GameObject platform;
+    public GameObject platform;
     GameObject newPlatform;
+    public GameObject crematory;
+    public List<BuildingClass> placedBuildings = new List<BuildingClass>();
+   
 
     public List<int> thisPosition = new List<int>();
     // Use this for initialization
 	void Start () {
         brickSpawner = GameObject.Find("brickSpawner");
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-    
-    void OnMouseDown ()
+
+    void OnMouseDown()
     {
-        if (brickSpawner.GetComponent<GridWorks>().buildablePlatforms[thisPosition[0]][thisPosition[1]] == 0)//still needs a menu to pop up
-        {
+        if (brickSpawner.GetComponent<GridWorks>().buildablePlatforms[this.thisPosition[1]][this.thisPosition[0]] == 0) {
             newPlatform = Instantiate(platform, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), Quaternion.identity);
-            brickSpawner.GetComponent<GridWorks>().buildablePlatforms[thisPosition[0]][thisPosition[1]] = 1;
+            newPlatform.transform.parent = this.transform.parent;
+            newPlatform.AddComponent<GridPieceClick>();
+            newPlatform.AddComponent<BoxCollider>();
+            newPlatform.GetComponent<BoxCollider>().enabled = true;
+            brickSpawner.GetComponent<GridWorks>().buildablePlatforms[this.thisPosition[1]][this.thisPosition[0]] = 1;
             Debug.Log("You lifted the ground!!!");
             Destroy(this.gameObject);
+        }
+        else if (brickSpawner.GetComponent<GridWorks>().buildablePlatforms[this.thisPosition[1]][this.thisPosition[0]] == 1) {
+            //spawn building
+            Instantiate(crematory, new Vector3(this.transform.position.x, this.transform.position.y + 0.1f, this.transform.position.z), Quaternion.identity);
+            
+            brickSpawner.GetComponent<GridWorks>().buildablePlatforms[this.thisPosition[1]][this.thisPosition[0]] = 3;
+            placedBuildings.Add(new BuildingClass("crematory", 1, 2, new int[]{ 5, 6 }, new int[] { 0, 0, -10, 0, 0, 5, -1, 6 }, "Burial", new int[] { 1, 2 }));
+            Debug.Log("You placed a crematory! You must expect quite a lot of dead people!");
+        }
+        else
+        {
+            Debug.Log("Sorry, can't let you do that.");
         }
     }
 }
