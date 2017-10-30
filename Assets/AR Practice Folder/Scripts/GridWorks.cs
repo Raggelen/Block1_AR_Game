@@ -8,7 +8,7 @@ public class GridWorks : MonoBehaviour {
     int widthGrid = 18;
     [SerializeField]
     GameObject gridPrefab;
-    GameObject parentObject;
+    public GameObject parentObject;
     [SerializeField]
     GameObject buildable;
     GameObject currentInstance;
