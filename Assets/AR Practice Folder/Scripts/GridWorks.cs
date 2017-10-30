@@ -8,7 +8,7 @@ public class GridWorks : MonoBehaviour {
     int widthGrid = 18;
     [SerializeField]
     GameObject gridPrefab;
-    public GameObject parentObject;
+    GameObject parentObject;
     [SerializeField]
     GameObject buildable;
     GameObject currentInstance;
@@ -57,7 +57,8 @@ public class GridWorks : MonoBehaviour {
                         else {
                             xCoordinate.Add(1);
                         }
-                        currentInstance.gameObject.transform.SetPositionAndRotation(new Vector3((zeroPointX + x), 1.01f, (zeroPointZ + z)), Quaternion.identity);
+                        currentInstance.gameObject.transform.SetPositionAndRotation(new Vector3((zeroPointX + x)/10, 0, (zeroPointZ + z)/10), Quaternion.identity);
+                        currentInstance.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
 
                     }
                     else
@@ -66,8 +67,8 @@ public class GridWorks : MonoBehaviour {
                         currentInstance.GetComponent<GridPieceClick>().thisPosition.Add(x);
                         currentInstance.GetComponent<GridPieceClick>().thisPosition.Add(z);
                         xCoordinate.Add(0);
-                        currentInstance.gameObject.transform.SetPositionAndRotation(new Vector3((zeroPointX + x), 1, (zeroPointZ + z)), Quaternion.identity);
-
+                        currentInstance.gameObject.transform.SetPositionAndRotation(new Vector3((zeroPointX + x)/10, 0, (zeroPointZ + z)/10), Quaternion.identity);
+                        currentInstance.transform.localScale = new Vector3(0.1f,0.1f,0.1f);
                     }
 
 
