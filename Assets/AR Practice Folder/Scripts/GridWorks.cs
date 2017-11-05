@@ -25,89 +25,59 @@ public class GridWorks : MonoBehaviour {
 
     void Start () {
 
-        martiniTower = GameObject.Find("Plane_001");
+        martiniTower = GameObject.Find("Plane.001");
         parentObject = GameObject.Find("ImageTarget");
         float zeroPointX = (-widthGrid * 0.5f + 0.5f);
         float zeroPointZ = (-lengthGrid * 0.5f + 0.5f);
 
-        if (buildablePlatforms.Count == 0)//Checks if the map has been created, if not, creates a new map
+        for (int x = 0; x < widthGrid; x++)
         {
-            for (int x = 0; x < widthGrid; x++)
+
+            List<int> xCoordinate = new List<int>();
+
+            for (int z = 0; z < lengthGrid; z++)
             {
 
-                List<int> xCoordinate = new List<int>();
-
-                for (int z = 0; z < lengthGrid; z++)
+                if (z > 5 && z < 12 && x > 5 && x < 12)
                 {
-
-                    if (z > 5 && z < 12 && x > 5 && x < 12)
+                    currentInstance = Instantiate(buildable, parentObject.transform);
+                    currentInstance.tag = "Floor";
+                    currentInstance.AddComponent<GridPieceClick>();
+                    currentInstance.GetComponent<GridPieceClick>().thisPosition.Add(x);
+                    currentInstance.GetComponent<GridPieceClick>().thisPosition.Add(z);
+                    currentInstance.GetComponent<GridPieceClick>().crematory = this.crematory;
+                    currentInstance.GetComponent<GridPieceClick>().platform = this.buildable;
+                    currentInstance.AddComponent<BoxCollider>();
+                    currentInstance.GetComponent<BoxCollider>().enabled = true;
+                    if ((z == 9 || z == 10 ) && (x == 9 || x == 10))
                     {
-                        currentInstance = Instantiate(buildable, parentObject.transform);
-                        currentInstance.AddComponent<GridPieceClick>();
-                        currentInstance.GetComponent<GridPieceClick>().thisPosition.Add(x);
-                        currentInstance.GetComponent<GridPieceClick>().thisPosition.Add(z);
-                        currentInstance.GetComponent<GridPieceClick>().crematory = this.crematory;
-                        currentInstance.GetComponent<GridPieceClick>().platform = this.buildable;
-                        currentInstance.AddComponent<BoxCollider>();
-                        currentInstance.GetComponent<BoxCollider>().enabled = true;
-                        if ((z == 9 || z == 10 ) && (x == 9 || x == 10))
-                        {
-                            xCoordinate.Add(2);
-                        }
-                        else {
-                            xCoordinate.Add(1);
-                        }
-                        currentInstance.gameObject.transform.SetPositionAndRotation(new Vector3((zeroPointX + x)/10, 0, (zeroPointZ + z)/10), Quaternion.identity);
-                        currentInstance.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-
+                        xCoordinate.Add(2);
+                        currentInstance.GetComponent<GridPieceClick>().buildablePlace = 2;
                     }
-                    else
-                    {
-                        currentInstance = Instantiate(gridPrefab, parentObject.transform);
-                        currentInstance.GetComponent<GridPieceClick>().thisPosition.Add(x);
-                        currentInstance.GetComponent<GridPieceClick>().thisPosition.Add(z);
-                        xCoordinate.Add(0);
-                        currentInstance.gameObject.transform.SetPositionAndRotation(new Vector3((zeroPointX + x)/10, 0, (zeroPointZ + z)/10), Quaternion.identity);
-                        currentInstance.transform.localScale = new Vector3(0.1f,0.1f,0.1f);
+                    else {
+                        xCoordinate.Add(1);
+                        currentInstance.GetComponent<GridPieceClick>().buildablePlace = 1;
                     }
-
+                    currentInstance.gameObject.transform.SetPositionAndRotation(new Vector3((zeroPointX + x)/10, 0, (zeroPointZ + z)/10), Quaternion.identity);
+                    currentInstance.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
 
                 }
-
-                buildablePlatforms.Add(xCoordinate);
-            }
-        }
-        else
-        {
-            int currentX = 0;
-
-            foreach(List<int> x in buildablePlatforms)
-            {
-                currentX += 1;
-
-                foreach(int z in x)
+                else
                 {
-                    if(z == 0)//check for platform, mud or building. Each building has another number
-                    {
-                        currentInstance = Instantiate(gridPrefab, parentObject.transform);
-                    }
-                    else if(z == 1)
-                    {
-                        currentInstance = Instantiate(buildable, parentObject.transform);
-                        currentInstance.AddComponent<GridPieceClick>();
-                        currentInstance.GetComponent<GridPieceClick>().thisPosition.Add(currentX);
-                        currentInstance.GetComponent<GridPieceClick>().thisPosition.Add(z);
-                        currentInstance.GetComponent<GridPieceClick>().crematory = this.crematory;
-                        currentInstance.AddComponent<BoxCollider>();
-                        currentInstance.GetComponent<BoxCollider>().enabled = true;
-                    }
-                    else
-                    {
-                        //open inspector
-                    }
-                    currentInstance.gameObject.transform.SetPositionAndRotation(new Vector3((zeroPointX + (currentX + 1)), 1.01f, (zeroPointZ + (z + 1))), Quaternion.identity);
+                    currentInstance = Instantiate(gridPrefab, parentObject.transform);
+                    currentInstance.GetComponent<GridPieceClick>().thisPosition.Add(x);
+                    currentInstance.GetComponent<GridPieceClick>().thisPosition.Add(z);
+                    xCoordinate.Add(0);
+                    currentInstance.gameObject.transform.SetPositionAndRotation(new Vector3((zeroPointX + x)/10, 0, (zeroPointZ + z)/10), Quaternion.identity);
+                    currentInstance.transform.localScale = new Vector3(0.1f,0.1f,0.1f);
                 }
+
+
             }
+
+            buildablePlatforms.Add(xCoordinate);
         }
     }
+       
+    
 }

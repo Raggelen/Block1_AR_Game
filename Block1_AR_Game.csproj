@@ -84,6 +84,7 @@
     <Compile Include="Assets\AR Practice Folder\Scripts\BuildingClass.cs" />
     <Compile Include="Assets\AR Practice Folder\Scripts\GridPieceClick.cs" />
     <Compile Include="Assets\AR Practice Folder\Scripts\GridWorks.cs" />
+    <Compile Include="Assets\AR Practice Folder\Scripts\MenuManager.cs" />
     <Compile Include="Assets\Vuforia\Prefabs\Scripts\BackgroundPlaneBehaviour.cs" />
     <Compile Include="Assets\Vuforia\Prefabs\Scripts\CloudRecoBehaviour.cs" />
     <Compile Include="Assets\Vuforia\Prefabs\Scripts\CylinderTargetBehaviour.cs" />
